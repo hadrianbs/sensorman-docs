@@ -10,11 +10,11 @@ Then register a sensor. After you registered your sensor, you'll get a sensor ke
 
 After that, you can code your device (a raspberry pi, a computer, an arduino, or anything you can think off.)
 
-The data collection API is located at ::
+The data collection web service is located at ::
 
 	http://sensorman.bayanulhaq.me/send-data
 
-The data collection api uses HTTP Post method with JSON data format. It means you have to encapsulate the data you'll send from your sensor as JSON. The data that the API retrieve is "sensor_key" and "sensor_reading".
+The data collection web service uses HTTP Post method with JSON data format. It means you have to encapsulate the data you'll send from your sensor as JSON. The data that the web service retrieve is "sensor_key" and "sensor_reading".
 Here's an example::
 
 	{"sensor_key": "4112f06300ff3c0da70186c16ee6f229fa6cb126", "sensor_reading": 24.64791526016068}
@@ -30,21 +30,16 @@ Here's an example client with python. It sends random value per n second. You ca
 	import urllib2
 	import random
 
-
-
 	def sendSensorData():
-
-
 		sensor_key = '4112f06300ff3c0da70186c16ee6f229fa6cb126'
 		sensor_reading = random.uniform(81, 87)
-
 
 		data = 	{
 			'sensor_key': sensor_key,
 			'sensor_reading': sensor_reading
 		}
 
-		req = urllib2.Request('http://192.168.1.114/sensorman/api/retrieve_data/')
+		req = urllib2.Request('http://sensorman.bayanulhaq.me/send-data/')
 		req.add_header('Content-Type', 'application/json')
 		response = urllib2.urlopen(req, json.dumps(data))
 		print json.dumps(data)
@@ -56,7 +51,3 @@ Here's an example client with python. It sends random value per n second. You ca
 		time.sleep(2)	
 
 
-
-To use this template, simply update it::
-
-	import read-the-docs-template
